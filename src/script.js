@@ -15,6 +15,10 @@ const canvas = document.querySelector('canvas.webgl');
 // Scene
 const scene = new THREE.Scene();
 
+// Fog
+const fog = new THREE.Fog('#262837', 1, 15);
+scene.fog = fog;
+
 /**
  * Textures
  */
@@ -133,14 +137,14 @@ house.add(doorLight);
 /**
  * Cursor
  */
-const cursor = {
-    x: 0,
-    y: 0
-};
-window.addEventListener('mousemove', (e) => {
-    cursor.x = e.clientX / sizes.width - .5;
-    cursor.y = - (e.clientY / sizes.height - .5);
-});
+// const cursor = {
+//     x: 0,
+//     y: 0
+// };
+// window.addEventListener('mousemove', (e) => {
+//     cursor.x = e.clientX / sizes.width - .5;
+//     cursor.y = - (e.clientY / sizes.height - .5);
+// });
 
 /**
  *  Sizes
@@ -164,39 +168,45 @@ window.addEventListener('resize', () => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
 
-// Double Click FullScreen
-window.addEventListener('dblclick', () => {
-    // For Safari Support
-    const fulscreenElement = document.fullscreenElement || document.webkitFullscreenElement;
-    if(!fulscreenElement){
-        if(canvas.requestFullscreen()){
-            canvas.requestFullscreen();
-        } else if(canvas.webkitRequestFullscreen()){
-            canvas.webkitRequestFullscreen();
-        }
-    } else{
-        if(document.exitFullscreen())
-        document.exitFullscreen();
-    }
-});
+// // Double Click FullScreen
+// window.addEventListener('dblclick', () => {
+//     // For Safari Support
+//     const fulscreenElement = document.fullscreenElement || document.webkitFullscreenElement;
+//     if(!fulscreenElement){
+//         if(canvas.requestFullscreen()){
+//             canvas.requestFullscreen();
+//         } else if(canvas.webkitRequestFullscreen()){
+//             canvas.webkitRequestFullscreen();
+//         }
+//     } else{
+//         if(document.exitFullscreen())
+//         document.exitFullscreen();
+//     }
+// });
 
-// Camera
+/**
+ * Camera
+ */
+// Base Camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, .1, 100);
-camera.position.x = 1;
-camera.position.y = 1;
-camera.position.z = 2;
+camera.position.x = 4;
+camera.position.y = 2;
+camera.position.z = 5;
 scene.add(camera);
 
 // Controls
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 
-// Renderer
+/**
+ * Renderer
+ */
 const renderer = new THREE.WebGLRenderer({
-    canvas
+    canvas: canvas
 });
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setClearColor('#262837');
 
 const clock = new THREE.Clock();
 const tick = () =>
