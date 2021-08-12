@@ -192,16 +192,16 @@ doorLight.position.set(0, 2.2, 2.7);
 house.add(doorLight);
 
 /**
- * Cursor
+ * Ghosts
  */
-// const cursor = {
-//     x: 0,
-//     y: 0
-// };
-// window.addEventListener('mousemove', (e) => {
-//     cursor.x = e.clientX / sizes.width - .5;
-//     cursor.y = - (e.clientY / sizes.height - .5);
-// });
+const ghost1 = new THREE.PointLight('#ff00ff', 2, 3);
+scene.add(ghost1);
+
+const ghost2 = new THREE.PointLight('#00ffff', 2, 3);
+scene.add(ghost2);
+
+const ghost3 = new THREE.PointLight('#ffff00', 2, 3);
+scene.add(ghost3);
 
 /**
  *  Sizes
@@ -224,22 +224,6 @@ window.addEventListener('resize', () => {
     renderer.setSize(sizes.width, sizes.height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
-
-// // Double Click FullScreen
-// window.addEventListener('dblclick', () => {
-//     // For Safari Support
-//     const fulscreenElement = document.fullscreenElement || document.webkitFullscreenElement;
-//     if(!fulscreenElement){
-//         if(canvas.requestFullscreen()){
-//             canvas.requestFullscreen();
-//         } else if(canvas.webkitRequestFullscreen()){
-//             canvas.webkitRequestFullscreen();
-//         }
-//     } else{
-//         if(document.exitFullscreen())
-//         document.exitFullscreen();
-//     }
-// });
 
 /**
  * Camera
@@ -265,11 +249,30 @@ renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setClearColor('#262837');
 
+/**
+ * Animate
+ */
 const clock = new THREE.Clock();
+
 const tick = () =>
 {
-    // Clock
     const elapsedTime = clock.getElapsedTime();
+
+    // Update Ghosts
+    const ghost1Angle = elapsedTime * .5;
+    ghost1.position.x = Math.cos(ghost1Angle) * 4;
+    ghost1.position.z = Math.sin(ghost1Angle) * 4;
+    ghost1.position.y = Math.sin(elapsedTime * 3);
+
+    const ghost2Angle = - elapsedTime * .32;
+    ghost2.position.x = Math.cos(ghost2Angle) * 5;
+    ghost2.position.z = Math.sin(ghost2Angle) * 5;
+    ghost2.position.y = Math.sin(elapsedTime * 4) + Math.sin(elapsedTime * 2.5);
+
+    const ghost3Angle = elapsedTime * .18;
+    ghost3.position.x = Math.cos(ghost3Angle) * (7 + Math.sin(elapsedTime * .32));
+    ghost3.position.z = Math.sin(ghost3Angle) * (7 + Math.sin(elapsedTime * .5));
+    ghost3.position.y = Math.sin(elapsedTime * 5) + Math.sin(elapsedTime * 2);
 
     // Updadate Controls
     controls.update();
@@ -277,6 +280,7 @@ const tick = () =>
     // Render
     renderer.render(scene, camera);
 
+    // Call tick again on the next frame
     window.requestAnimationFrame(tick);
 };
 
