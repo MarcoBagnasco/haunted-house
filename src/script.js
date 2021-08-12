@@ -111,20 +111,24 @@ scene.add(floor);
 /**
  * Lights
  */
- const ambientLight = new THREE.AmbientLight(0xffffff, .5);
- scene.add(ambientLight);
- 
- gui.add(ambientLight, 'intensity').min(0).max(1).step(.001);
- 
- const directionalLight = new THREE.DirectionalLight(0xffffff, .3);
- directionalLight.position.set(2, 2, -1);
- scene.add(directionalLight);
- 
- gui.add(directionalLight, 'intensity').min(0).max(1).step(.001);
- gui.add(directionalLight.position, 'x').min(-5).max(5).step(.001);
- gui.add(directionalLight.position, 'y').min(-5).max(5).step(.001);
- gui.add(directionalLight.position, 'z').min(-5).max(5).step(.001);
+// Ambient Light
+const ambientLight = new THREE.AmbientLight('#b9d5ff', .12);
+gui.add(ambientLight, 'intensity').min(0).max(1).step(.001);
+scene.add(ambientLight);
 
+// Directional Light
+const moonLight = new THREE.DirectionalLight('#b9d5ff', .12);
+moonLight.position.set(4, 5, -2);
+gui.add(moonLight, 'intensity').min(0).max(1).step(.001);
+gui.add(moonLight.position, 'x').min(-5).max(5).step(.001);
+gui.add(moonLight.position, 'y').min(-5).max(5).step(.001);
+gui.add(moonLight.position, 'z').min(-5).max(5).step(.001);
+scene.add(moonLight);
+
+// Door Light
+const doorLight = new THREE.PointLight('#ff7d46', 1, 7);
+doorLight.position.set(0, 2.2, 2.7);
+house.add(doorLight);
 
 /**
  * Cursor
