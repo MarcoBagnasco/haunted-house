@@ -1,4 +1,5 @@
-# Three.js Journey
+# Haunted House
+### Little Three.js Scenario
 
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).
